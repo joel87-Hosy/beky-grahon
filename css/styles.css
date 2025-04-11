@@ -201,39 +201,6 @@ h3, .h3 {
 h4, .h4 {
   font-size: calc(1.275rem + 0.3vw);
 }
-@media (min-width: 1200px) {
-  h4, .h4 {
-    font-size: 1.5rem;
-  }
-}
-@media (max-width: 768px) {
-  .carousel-caption .testi {
-      font-size: 1rem; /* Réduit la taille du texte */
-  }
-  .carousel-caption .text-muted {
-      font-size: 0.875rem; /* Réduit la taille du texte */
-  }
-  .slide .testi,
-  .slide .text-muted {
-    top: 70%; /* Descend les éléments plus bas */
-    transform: translate(-50%, -50%);
-    font-size: 1rem; /* Ajuste la taille de la police si nécessaire */
-  }
-  .carousel-caption {
-    display: flex;
-    flex-direction: column; /* Aligne les éléments verticalement */
-    align-items: center; /* Centre horizontalement */
-    text-align: center; /* Centre le texte */
-}
-
-.carousel-caption .testi {
-    margin-bottom: 10px; /* Ajoute un espace entre le h5 et le p */
-}
-aside {
-  max-width: 200px; /* Réduit la largeur maximale */
-  padding: 10px; /* Réduit le padding */
-}
-}
 
 h5, .h5 {
   font-size: 1.25rem;
@@ -720,6 +687,7 @@ progress {
   margin-right: auto;
   margin-left: auto;
 }
+
 
 @media (min-width: 576px) {
   .container-sm, .container {
