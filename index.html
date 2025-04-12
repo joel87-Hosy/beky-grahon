@@ -104,12 +104,19 @@
                 <div class="col-lg-4">
                     <aside>
                         <h2>catégories</h2>
-                        <a href="#">pommades</a>
-                        <a href="#">gel douche</a>
-                        <a href="#">lotion</a>
-                        <a href="#">savon homme & femme</a>
-                        <a href="#">creme</a>
+                        <a href="#" class="category-link" data-category="pommades">pommades</a>
+                        <a href="#" class="category-link" data-category="gel-douche">gel douche</a>
+                        <a href="#" class="category-link" data-category="lotion">lotion</a>
+                        <a href="#" class="category-link" data-category="savon">savon homme & femme</a>
+                        <a href="#" class="category-link" data-category="creme">creme</a>
                     </aside>
+                    
+                    <div id="category-panel" class="category-panel">
+                        <button id="close-category-panel" class="close-category-panel">×</button>
+                        <div id="category-panel-content" class="category-panel-content">
+                            <!-- Les produits liés à la catégorie seront affichés ici -->
+                        </div>
+                    </div>
                 </div>
             </div>     
         <section class="page-section bg-light" id="portfolio">
