@@ -133,7 +133,6 @@ aside a:hover{
   background-color: #2c3e50;
   color: #fff;
 }
-
 #customCarousel {
   background-color: #9c640c ; 
   padding: 20px; 
@@ -144,7 +143,8 @@ aside a:hover{
   text-align: center;
 }
 
-.slide .Nouveauté {
+.slide .Nouveauté,
+ {
   position: absolute;
   top: 20%; /* Position initiale */
   left: 50%;
