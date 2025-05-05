@@ -53,82 +53,32 @@ window.addEventListener('DOMContentLoaded', event => {
 
 });
 
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.btn-plus').forEach(button => {
-        button.addEventListener('click', () => {
-            const quantityElement = button.previousElementSibling;
-            let quantity = parseInt(quantityElement.textContent, 10);
-            quantityElement.textContent = quantity + 1;
-        });
-    });
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggleThemeButton = document.getElementById("toggleTheme");
+    const body = document.body;
 
-    document.querySelectorAll('.btn-minus').forEach(button => {
-        button.addEventListener('click', () => {
-            const quantityElement = button.nextElementSibling;
-            let quantity = parseInt(quantityElement.textContent, 10);
-            if (quantity > 1) {
-                quantityElement.textContent = quantity - 1;
-            }
-        });
-    });
+    // Vérifiez si un thème est déjà enregistré dans localStorage
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+        body.classList.add("dark-theme");
+        toggleThemeButton.textContent = "Mode Clair";
+    }
 
-    document.querySelectorAll('.btn-like').forEach(button => {
-        button.addEventListener('click', () => {
-            button.classList.toggle('liked');
-        });
+    // Ajouter un événement pour basculer entre les thèmes
+    toggleThemeButton.addEventListener("click", () => {
+        body.classList.toggle("dark-theme");
+        const isDarkTheme = body.classList.contains("dark-theme");
+
+        // Mettre à jour le texte du bouton
+        toggleThemeButton.textContent = isDarkTheme ? "Mode Clair" : "Mode Sombre";
+
+        // Enregistrer le thème dans localStorage
+        localStorage.setItem("theme", isDarkTheme ? "dark" : "light");
     });
 });
 
-const cart = [];
-         
-             document.addEventListener('DOMContentLoaded', () => {
-                 document.querySelectorAll('.btn-add-to-cart').forEach(button => {
-                     button.addEventListener('click', () => {
-                         const card = button.closest('.card');
-                         const title = card.querySelector('.card-title').textContent;
-                         const price = card.querySelector('.card-text').textContent;
-                         const quantity = card.querySelector('.quantity').textContent;
-         
-                         const existingItem = cart.find(item => item.title === title);
-                         if (existingItem) {
-                             existingItem.quantity = parseInt(existingItem.quantity) + parseInt(quantity);
-                         } else {
-                             cart.push({ title, price, quantity });
-                         }
-         
-                         alert(`${title} a été ajouté au panier.`);
-                     });
-                 });
-         
-                 document.getElementById('cart-link').addEventListener('click', () => {
-                     const cartItemsContainer = document.getElementById('cart-items');
-                     cartItemsContainer.innerHTML = '';
-                     cart.forEach(item => {
-                         const li = document.createElement('li');
-                         li.className = 'list-group-item d-flex justify-content-between align-items-center';
-                         li.textContent = `${item.title} - ${item.price} x ${item.quantity}`;
-                         cartItemsContainer.appendChild(li);
-                     });
-                 });
-         
-                 document.getElementById('checkout-button').addEventListener('click', () => {
-                     fetch('/checkout', {
-                         method: 'POST',
-                         headers: { 'Content-Type': 'application/json' },
-                         body: JSON.stringify(cart),
-                     })
-                     .then(response => response.json())
-                     .then(data => {
-                         alert('Commande envoyée avec succès!');
-                         cart.length = 0; // Clear the cart
-                         document.getElementById('cart-items').innerHTML = '';
-                     })
-                     .catch(error => {
-                         console.error('Erreur:', error);
-                         alert('Une erreur est survenue lors de l\'envoi de la commande.');
-                     });
-                 });
-             });
+
+
              
              document.addEventListener("DOMContentLoaded", () => {
                 const categoryPanel = document.getElementById("category-panel");
@@ -230,3 +180,104 @@ const cart = [];
                     categoryPanel.classList.remove("open");
                 });
             });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const categoryPanel = document.getElementById('category-panel');
+        const closeCategoryPanel = document.getElementById('close-category-panel');
+
+        // Fermer le panneau lorsque le bouton de fermeture est cliqué
+        closeCategoryPanel.addEventListener('click', () => {
+            categoryPanel.style.display = 'none';
+        });
+
+        // Fermer le panneau lorsque l'utilisateur clique en dehors de celui-ci
+        document.addEventListener('click', (event) => {
+            if (!categoryPanel.contains(event.target) && !event.target.classList.contains('category-link')) {
+                categoryPanel.style.display = 'none';
+            }
+        });
+
+        // Afficher le panneau lorsque l'utilisateur clique sur une catégorie
+        const categoryLinks = document.querySelectorAll('.category-link');
+        categoryLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                categoryPanel.style.display = 'block';
+            });
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const cart = []; // Tableau pour stocker les produits ajoutés au panier
+        const cartItemsContainer = document.getElementById('cart-items'); // Conteneur pour afficher les produits dans le panier
+        const checkoutButton = document.getElementById('checkout-button'); // Bouton pour passer la commande
+    
+        // Gestion des boutons "+" pour augmenter la quantité
+        document.querySelectorAll('.btn-plus').forEach(button => {
+            button.addEventListener('click', () => {
+                const quantityElement = button.previousElementSibling;
+                let quantity = parseInt(quantityElement.textContent, 10) || 0;
+                quantityElement.textContent = quantity + 1; // Augmente la quantité
+            });
+        });
+    
+        // Gestion des boutons "-" pour diminuer la quantité
+        document.querySelectorAll('.btn-minus').forEach(button => {
+            button.addEventListener('click', () => {
+                const quantityElement = button.nextElementSibling;
+                let quantity = parseInt(quantityElement.textContent, 10) || 0;
+                if (quantity > 1) {
+                    quantityElement.textContent = quantity - 1; // Diminue la quantité
+                }
+            });
+        });
+    
+        // Gestion des boutons "Ajouter au panier"
+        document.querySelectorAll('.btn-add-to-cart').forEach(button => {
+            button.addEventListener('click', () => {
+                const card = button.closest('.card'); // Trouve la carte du produit
+                const title = card.querySelector('.card-title').textContent; // Nom du produit
+                const price = card.querySelector('.card-text').textContent; // Prix du produit
+                const quantityElement = card.querySelector('.quantity'); // Élément de quantité
+                const quantity = parseInt(quantityElement.textContent, 10) || 1; // Quantité actuelle
+    
+                // Vérifie si le produit existe déjà dans le panier
+                const existingItem = cart.find(item => item.title === title);
+                if (existingItem) {
+                    existingItem.quantity += quantity; // Ajoute la quantité
+                } else {
+                    cart.push({ title, price, quantity }); // Ajoute un nouveau produit au panier
+                }
+    
+                alert(`${title} a été ajouté au panier avec une quantité de ${quantity}.`);
+                updateCartDisplay(); // Met à jour l'affichage du panier
+            });
+        });
+    
+        // Fonction pour mettre à jour l'affichage du panier
+        function updateCartDisplay() {
+            cartItemsContainer.innerHTML = ''; // Vide le conteneur du panier
+            cart.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                li.textContent = `${item.title} - ${item.price} x ${item.quantity}`;
+                cartItemsContainer.appendChild(li);
+            });
+        }
+    
+        // Gestion du bouton "Passer la commande"
+        checkoutButton.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Votre panier est vide.');
+                return;
+            }
+    
+            // Simule l'envoi de la commande
+            alert('Votre commande a été passée avec succès !');
+            cart.length = 0; // Vide le panier
+            updateCartDisplay(); // Met à jour l'affichage du panier
+        });
+    });
+
+    
+

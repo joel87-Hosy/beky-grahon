@@ -103,11 +103,48 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+/* Thème clair (par défaut) */
+body {
+  background-color: #ffffff;
+  color: #000000;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Thème sombre */
+body.dark-theme {
+  background-color: #2c3e50;
+  color: #ffffff;
+}
+/* Ajustez les couleurs des autres éléments si nécessaire */
+.navbar.dark-theme {
+  background-color: #1a252f;
+}
+
+.btn-outline-light.dark-theme {
+  border-color: #ffffff;
+  color: #ffffff; */
+}
+/* Styles fixes pour les titres */
+h1, h2, h3, h4, h5, h6 {
+  color: #333; /* Couleur fixe pour les titres */
+  transition: none; /* Désactive les transitions pour les titres */
+}
+
+/* Mode sombre */
+body.dark-theme h1,
+body.dark-theme h2,
+body.dark-theme h3,
+body.dark-theme h4,
+body.dark-theme h5,
+body.dark-theme h6 {
+  color: #333; /* Conserve la même couleur dans le mode sombre */
+}
 .row.d-flex {
   display: flex;
   align-items: flex-start; 
   margin: 10px 0;
 }
+
 aside {
   margin-left: auto; 
   width: 100%; 
@@ -135,21 +172,31 @@ aside a:hover{
 }
 /* Style du panneau glissant */
 .category-panel {
+  display: none;
   position: fixed;
-  top: 0;
+  top: 20%;
   left: -100%;
-  width: 80%; /* Largeur du panneau */
+  width: 80%; 
   height: 100%;
-  background-color: #f8f9fa;
-  z-index: 1050; /* Au-dessus du contenu principal */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+  background-color:  rgba(255, 255, 255, 0); /* Fond transparent */;
+  border: 1px solid#ccc;
+  z-index: 1000; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   overflow-y: auto;
-  transition: left 0.3s ease;
+  transform: translateY(-20px);
+  transition: 0.3s ease, opacity 0.3s ease;
   padding: 20px;
+  opacity: 1;
 }
 
 .category-panel.open {
   left: 0;
+  transform: translateY(0);
+  opacity: 1;
+}
+.category-panel h2 {
+  color: #333;
+  margin-bottom: 15px;
 }
 
 .close-category-panel {
@@ -167,6 +214,17 @@ aside a:hover{
 .category-panel-content {
   margin-top: 60px;
 }
+ .panneau img {
+      width: 200px;
+      height: auto;
+      border-radius: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .category-panel-content img:hover {
+      transform: scale(1.1); 
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2); 
+    }
+
 /* Grille des produits */
 .product-grid {
   display: grid;
@@ -199,31 +257,16 @@ aside a:hover{
   margin-top: 10px;
 }
 
-.btn-like {
+.category-panel .close-category-panel {
+  position: absolute;
+  top: 10px;
+  right: 10px;
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: 20px;
   cursor: pointer;
-  color: #ff0000;
+  color: #333;
 }
-
-.btn-like.liked {
-  color: #ff69b4;
-}
-
-.btn-plus, .btn-minus {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.btn-plus:hover, .btn-minus:hover {
-  background-color: #0056b3;
-}
-
 .quantity {
   font-size: 1.2rem;
   font-weight: bold;
